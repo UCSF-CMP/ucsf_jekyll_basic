@@ -1,0 +1,31 @@
+---
+layout: default
+---
+
+<div class="home">
+	
+	 <!-- Content -->
+		<div><img src="img/honeydew.jpg" alt="lab-home">
+			<h2>Our Lab has some content to share with the world.</h2>
+			<p>Shabby chic gluten-free church-key freegan meggings. Kale chips tattooed flexitarian brunch, disrupt banh mi sartorial post-ironic health goth yr you probably haven't heard of them cardigan mumblecore. Freegan flannel sriracha, brunch biodiesel tilde cold-pressed Vice dreamcatcher gastropub. You probably haven't heard of them chillwave sartorial drinking vinegar High Life gastropub. </p>
+			<p>Synth wolf banh mi keffiyeh, McSweeney's aesthetic listicle ethical dreamcatcher gluten-free cornhole drinking vinegar four loko four dollar toast Wes Anderson. Narwhal salvia meggings polaroid meditation sustainable. Brooklyn raw denim tofu heirloom tilde fanny pack kogi fashion axe, Wes Anderson ugh Godard letterpress lo-fi banh mi Echo Park.</p>
+		</div>
+	<!-- /Content-->
+
+  <h1 class="page-heading">Posts</h1>
+
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+
+</div>
