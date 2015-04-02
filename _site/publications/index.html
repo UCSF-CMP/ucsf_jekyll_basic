@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Publications</title>
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="canonical" href="http://yourdomain.com/publications/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+		
+		<div class="top-banner logo teal">
+	        <div class="inner">
+	            <div>
+	                <a class="logotype" href="http://www.ucsf.edu/">
+	                    <span>University of California San Francisco</span>
+	                </a>
+	            </div>
+	            <div class="nav">
+	                <ul class="top-banner-menu">
+	                    <li><a href="http://www.ucsf.edu/about">About UCSF</a></li>
+	                    <li><a href="http://www.ucsf.edu/search">Search UCSF</a></li>
+	                    <li><a href="http://www.ucsfhealth.org/">UCSF Medical Center</a></li>
+	                </ul>
+	            </div>
+	        </div>
+	    </div>
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Honeydew Lab</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+          <a class="page-link" href="/contact/">Contact</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/publications/">Publications</a>
+          
+        
+          
+          <a class="page-link" href="/research/">Research</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        	<div class="post">
+
+	  <header class="post-header">
+	    <h1 class="post-title">Publications</h1>
+	  </header>
+
+	  <article class="post-content">
+	    <p>Have you considered using UCSF Profiles? Why not? they have nice JSON v2 content ready to use!
+http://opendata.profiles.ucsf.edu/
+http://opendata.profiles.ucsf.edu/json-v2.html</p>
+
+<head>
+    <!-- load a recent version of jQuery -->
+ 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <!-- get data from the UCSF Profiles API -->
+
+	<script>
+
+// we're grabbing data from the UCSF Profiles JSON API v2
+// details at http://opendata.profiles.ucsf.edu/json-v2.html
+
+// we get the Profiles URL name from the URL, e.g. "http://profiles.ucsf.edu/jeanette.brown"
+// but you can also specify people by FNO, Profiles ID, Employee ID, etc.
+add_profiles_user_content('ProfilesURLName', 'jeffrey.bluestone');
+// for example try commenting out the line above, and uncommenting the line below
+// add_profiles_user_content('FNO', 'Jeffrey.Bluestone@ucsf.edu');
+
+
+//PROFILES SCRIPT FUNCTIONS
+	function add_profiles_user_content (identifier_type, identifier) {
+	$.getJSON('http://api.profiles.ucsf.edu/json/v2/?source=anatomy.ucsf.edu&' + identifier_type + '=' + identifier + '&publications=full&callback=?',
+	      function(response) {
+		  if (response) {
+		      if (response.error) { // if UCSF Profiles reports an error, can do something with that here
+			  if (window.console && window.console.log) {
+			      console.log('Error from UCSF Profiles API: ' + response.error);
+			      // alert('Error from UCSF Profiles API: ' + response.error);
+			  }
+		      } else {
+
+			  $(document).ready(function() {   // execute the following code after DOM is ready
+
+			      var data = response.Profiles[0];
+
+			      if (data.Name) {  // show name, if we have it
+				  $('#profiles_name').text(data.Name);
+			      }
+			      if (data.ProfilesURL) { // add link to Profiles
+				  $('#profiles_page_link_container').empty().show().append('<a href="' + data.ProfilesURL + '" title="Go to UCSF Profiles, powered by CTSI" rel="me">UCSF Profiles page</a>');
+			      } else {
+				  $('#profiles_page_link_container').empty().hide();
+			      }
+			      if (data.PhotoURL) { // show photo, if we have it
+				  $('#profiles_photo_container').empty().show().append($('<img class="img-circle" id="profiles_photo" />').attr('src', data.PhotoURL).error(function(){this.style.display='none'}));
+			      } else {
+				  $('#profiles_photo_container').empty().hide();
+			      }
+			      if (data.Narrative) { // show narrative, if we have it
+				  // truncate text to 500 characters, and delete any partial last sentence
+			          var truncated_narrative = data.Narrative.substr(0,500).replace(/[\s\r\n]/g, " ").replace(/^(.+\.[\s\n\r]).*?$/g, "$1");
+				  $('#profiles_narrative').show().text(truncated_narrative);
+			      } else {
+				  $('#profiles_narrative').hide();
+			      }
+			      if (data.Email) { // show narrative, if we have it
+				  $('#profiles_email_link_container').empty().show().append('<a id="href="mailto:' + data.Email + '">' + data.Email + '</a>');
+			      } else {
+				  $('#profiles_email_link_container').hide();
+			      }
+			      if (data.Publications && data.Publications.length > 0) {
+				  $('#profiles_publications ol').remove();
+				  $('#profiles_publications').show().append($('<ol id="profiles_publications_list"></ol>'));
+				  jQuery.each(data.Publications, function() {
+				      var li = $('<li id="profiles_publications_li" />'); // create new list item
+				      li.append(this.PublicationTitle + ' '); // add the publication name
+				      if (this.PublicationSource && this.PublicationSource.length > 0) { // ...and a link, if available
+					  li.append($('<a class="profiles_publication_link" />').attr('href', this.PublicationSource[0].PublicationSourceURL).text('View on ' + this.PublicationSource[0].PublicationSourceName));
+				      }
+				      $('#profiles_publications_list').append(li); // insert the list item
+				  });
+			      } else {
+				  $('#profiles_publications').hide();
+			      }
+			      if (data.AwardOrHonors && data.AwardOrHonors.length > 0) {
+				  $('#profiles_awards_list').remove();
+				  $('#profiles_awards').show().append($('<ul id="profiles_awards_list"></ul>'));
+				  jQuery.each(data.AwardOrHonors, function() {
+				      var li = $('<li />').append(this.Summary);
+				      $('#profiles_awards_list').append(li);
+				  });
+			      } else {
+				  $('#profiles_awards').hide();
+			      }
+
+			      $("html, body").animate({ scrollTop: 0 }, 100);
+			      $("[id^='profiles_']:visible").fadeIn(100).fadeOut(100).fadeIn(100);
+			  });
+
+		      }
+		  }
+	      }
+	     );
+	}
+
+	function highlight_profiles_content (seconds) {
+	var ms = (seconds || 1) * 1000;
+	$( "[id^='profiles_']" ).addClass('highlighted');
+	setTimeout(function() {
+	$( "[id^='profiles_']" ).removeClass('highlighted');
+	}, ms);
+	}
+
+	</script>
+
+</head>
+
+
+	  </article>
+
+
+    <div class="container">
+
+      <!-- start of content automatically grabbed from Profiles -->
+      <div class="jumbotron">
+	<div id="profiles_photo_container"></div>
+	<h1 id="profiles_name"></h1>
+	<p id="profiles_narrative"></p>
+      </div>
+      <div class="row">
+	<div class="col-md-7 col-md-offset-1"> <!-- start first column -->
+
+	  <h2>Connect</h2>
+	  <ul>
+	    <li id="profiles_email_link_container"></li>
+	    <li id="profiles_page_link_container"></li>
+	  </ul>
+
+	  <div id="profiles_awards"><h2>Awards</h2></div>
+	  <div id="profiles_publications"><h2>Publications</h2></div>
+
+
+		</div> 
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+<div class="wrapper">
+
+   	<h2 class="footer-heading">Honeydew Lab</h2>
+<div id="footer">
+<div class="footer">© 2015 University of California Regents, All Rights Reserved.</div>
+</div>
+
+</footer>
+
+  </body>
+
+</html>
